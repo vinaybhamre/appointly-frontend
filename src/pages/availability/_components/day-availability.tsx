@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+import TimeSelector from "@/components/TimeSelector";
 import {
+  FormControl,
   FormField,
   FormItem,
-  FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { XIcon } from "lucide-react"; // Replace with your actual icon
-import TimeSelector from "@/components/TimeSelector";
-import { DayOfWeek } from "@/lib/availability";
+import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { XIcon } from "lucide-react"; // Replace with your actual icon
 
 interface DayAvailabilityProps {
   day: string;
@@ -25,7 +24,7 @@ interface DayAvailabilityProps {
   onTimeSelect: (
     day: string,
     field: "startTime" | "endTime",
-    time: string
+    time: string,
   ) => void;
 }
 
@@ -44,7 +43,7 @@ const DayAvailability = ({
         <div className="inline-flex items-center cursor-pointer">
           <Switch
             checked={isAvailable}
-            onCheckedChange={(checked) => {
+            onCheckedChange={(checked: any) => {
               form.setValue(`days.${index}.isAvailable`, checked);
               if (!checked) {
                 form.setValue(`days.${index}.startTime`, "09:00");
@@ -53,7 +52,7 @@ const DayAvailability = ({
             }}
           />
           <Label className="ml-2.5 text-[15px] font-semibold uppercase">
-            {dayMapping[day] as DayOfWeek}
+            {dayMapping[day]}
           </Label>
         </div>
       </div>
@@ -78,7 +77,7 @@ const DayAvailability = ({
                             `end--time`,
                             form.formState.errors.availability?.[index]
                               ?.startTime &&
-                              "!border-destructive !ring-0 focus-visible:!ring-0"
+                              "!border-destructive !ring-0 focus-visible:!ring-0",
                           )}
                           onSelect={(time) =>
                             onTimeSelect(day, "startTime", time)
@@ -104,7 +103,7 @@ const DayAvailability = ({
                             `end--time`,
                             form.formState.errors.availability?.[index]
                               ?.endTime &&
-                              "!border-destructive !ring-0 focus-visible:!ring-0"
+                              "!border-destructive !ring-0 focus-visible:!ring-0",
                           )}
                           onSelect={(time) =>
                             onTimeSelect(day, "endTime", time)
